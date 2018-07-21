@@ -170,7 +170,7 @@ exports.Account = class Account
 
 			if not @account
 				console.log '\nbasecamp: account not found, ' +
-							 @userInfo.identity.email_address + ', ' + @accountId
+								@userInfo.identity.email_address + ', ' + @accountId
 				cb 'basecamp: account not found'
 				return
 
@@ -194,7 +194,7 @@ exports.Account = class Account
 			cb 'basecamp: req error, invalid opcode ' + op
 			return
 
-		{section, id, query, headers, body, stream, file} = options
+		{section, id, query, headers, body, stream, file, url, all} = options
 
 #		console.log 'basecamp: req method ',  {op, accountInstance: @}
 
@@ -236,7 +236,10 @@ exports.Account = class Account
 				qStr += (if haveQM then '&' else '?') + k + '=' + v
 				haveQM = yes
 
-		requestOpts.url = @account.href + path + qStr  # encodeURIComponent ?
+		if url 
+			requestOpts.url = url
+		else
+			requestOpts.url = @account.href + path + qStr  # encodeURIComponent ?
 
 		if headers then _.extend requestOpts.headers, headers
 
@@ -255,14 +258,30 @@ exports.Account = class Account
 
 			if error
 				console.log '\nbasecamp: req error, bad response ' + op +
-						   ' ' + @account.name, '\n\n', requestOpts, '\n\n', error
+							' ' + @account.name, '\n\n', requestOpts, '\n\n', error
 				cb error
 				return
 
 #			console.log '\nbasecamp: response ' + op + ' ' +
 #                        @userInfo.identity.email_address + ' ' + @account.name, body
 
-			cb null, body
+			if all
+				link = response.headers.link
+				nextUrl = ""
+				if link
+					nextUrl = link.substring(
+						link.lastIndexOf("<") + 1, 
+						link.lastIndexOf(">")
+					);
+
+				if nextUrl
+					_this.req op, {url:nextUrl}, (error, result) => 
+						cb null, body.concat result
+				else
+					return cb null, body
+				return
+			else
+				cb null, body
 
 #		console.log '\nbasecamp: pre-request ', {op, stream: stream?, file, requestOpts}
 
@@ -287,8 +306,7 @@ exports.Account = class Account
 
 			if stream then streamIt(); return
 
-			if not requestOpts.headers['Content-Length'] and
-			   not requestOpts.headers['content-length']
+			if not requestOpts.headers['Content-Length'] and not requestOpts.headers['content-length']
 				fs.stat file, (err, stats) ->
 					if err
 						reqCB 'fs.stat error ' + requestOpts.url + JSON.stringify err

@@ -1,17 +1,26 @@
 {
   "name": "basecamp",
   "description": "A wrapper for the basecamp API",
-  "tags" : ["basecamp", "util", "utility", "api", "wrapper"],
+  "tags": [
+    "basecamp",
+    "util",
+    "utility",
+    "api",
+    "wrapper"
+  ],
   "author": "mark@hahnca.com",
-  "main" : "basecamp.js",
-  "version" : "0.2.0",
+  "main": "basecamp.js",
+  "version": "0.2.0",
   "dependencies": {
     "request": ">= 2.0.0",
     "underscore": ">= 1.1.0"
   },
-  "repository" : {
-	"type" : "git",
-	"url" : "http://github.com/mark-hahn/basecamp.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mark-hahn/basecamp.git"
   },
-  "engine": "node >= 0.4.1"
+  "engine": "node >= 0.4.1",
+  "devDependencies": {
+    "coffeescript": "^2.3.1"
+  }
 }
