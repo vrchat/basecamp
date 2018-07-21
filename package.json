@@ -20,7 +20,5 @@
     "url": "http://github.com/mark-hahn/basecamp.git"
   },
   "engine": "node >= 0.4.1",
-  "devDependencies": {
-    "coffeescript": "^2.3.1"
-  }
+  "devDependencies": {}
 }
