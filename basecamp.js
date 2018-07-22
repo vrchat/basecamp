@@ -51,7 +51,7 @@
         return;
       }
       return this._getToken(query, null, function(err, userInfo, html) {
-        res.end(html);
+        // res.end(html);
         return typeof cb === "function" ? cb(err, userInfo) : void 0;
       });
     };
