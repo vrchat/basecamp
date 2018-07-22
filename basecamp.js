@@ -237,6 +237,7 @@
         requestOpts.url = this.account.href + path + qStr;
       }
 
+      // console.log("Request Url: " + requestOpts.url)
       if (headers) {
         _.extend(requestOpts.headers, headers);
       }
@@ -270,7 +271,7 @@
           }
 
           if(nextUrl) {
-            _this.req(op, {url:nextUrl}, (error, result) => {
+            _this.req(op, {url:nextUrl, getAll:true}, (error, result) => {
               return cb(null, body.concat(result));
             }); 
           } else {
@@ -339,7 +340,7 @@
     function Project(account, projectId) {
       this.account = account;
       this.projectId = projectId;
-      this.account.primaryId = 'projects/' + this.projectId;
+      this.account.primaryId = this.projectId;
     }
 
     Project.prototype.req = function() {
@@ -429,7 +430,7 @@
     create_project: 'POST/projects.json',
     update_project: 'PUT/~primaryId~.json',
     delete_project: 'DELETE/~primaryId~.json',
-    get_todolists: '/~primaryId~/todolists.json',
+    get_todolists: '/buckets/~primaryId~/todosets/~secondaryId~/todolists.json',
     get_todolists_completed: '/~primaryId~/todolists/completed.json',
     get_todolists_all: '/todolists.json',
     get_todolists_all_completed: '/todolists/completed.json',
@@ -438,6 +439,8 @@
     create_todolist: 'POST/~primaryId~/todolists.json',
     update_todolist: 'PUT/~primaryId~/todolists/~secondaryId~.json',
     delete_todolist: 'DELETE/~primaryId~/todolists/~secondaryId~.json',
+    get_todolist_groups: '/buckets/~primaryId~/todolists/~secondaryId~/groups.json',
+    get_todos: '/buckets/~primaryId~/todolists/~secondaryId~/todos.json',
     get_todo: '/~primaryId~/todos/~secondaryId~.json',
     create_todo: 'POST/~primaryId~/todos.json',
     update_todo: 'PUT/~primaryId~/todos/~secondaryId~.json',
@@ -445,7 +448,8 @@
     get_topics: '/~primaryId~/topics.json',
     get_topics_all: '/topics.json',
     create_uploads: 'POST/~primaryId~/uploads.json',
-    get_upload: '~primaryId~/uploads/~secondaryId~.json'
+    get_upload: '~primaryId~/uploads/~secondaryId~.json',
+    get_recordings: '/projects/recordings.json'
   };
 
 }).call(this);
