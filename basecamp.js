@@ -406,7 +406,7 @@
     create_calendar: 'POST/calendars.json',
     update_calendar: 'PUT/~primaryId~.json',
     delete_calendar: 'DELETE/~primaryId~.json',
-    create_comment: 'POST/~primaryId~/~section~/~secondaryId~/comments.json',
+    create_comment: 'POST/buckets/~primaryId~/recordings/~secondaryId~/comments.json',
     delete_comment: 'DELETE/~primaryId~/comments/~secondaryId~.json',
     get_documents: '/~optionalId~/documents.json',
     get_document: '/~primaryId~/documents/~secondaryId~.json',
