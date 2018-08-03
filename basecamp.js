@@ -442,7 +442,7 @@
     get_todolist_groups: '/buckets/~primaryId~/todolists/~secondaryId~/groups.json',
     get_todos: '/buckets/~primaryId~/todolists/~secondaryId~/todos.json',
     get_todo: '/buckets/~primaryId~/todos/~secondaryId~.json',
-    create_todo: 'POST/projects/~primaryId~/todolists/~secondaryId~/todos.json',
+    create_todo: 'POST/buckets/~primaryId~/todolists/~secondaryId~/todos.json',
     update_todo: 'PUT/buckets/~primaryId~/todos/~secondaryId~.json',
     delete_todo: 'DELETE/~primaryId~/todos/~secondaryId~.json',
     get_topics: '/~primaryId~/topics.json',
